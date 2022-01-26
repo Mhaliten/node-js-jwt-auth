@@ -11,7 +11,7 @@ module.exports = function(app) {
   });
 
 
-  app.get('/tipusok', (req, res) => {
+  app.get('/tipus', (req, res) => {
     var mysql = require('mysql')
     var connection = mysql.createConnection({
       host: 'localhost',
@@ -49,7 +49,7 @@ module.exports = function(app) {
     
     connection.connect()
     
-    connection.query('DELETE FROM termekek WHERE termek_id = '+req.body.bevitel1, function (err, rows, fields) {
+    connection.query('DELETE FROM tipus WHERE tipus_id ='+req.body.bevitel1, function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
