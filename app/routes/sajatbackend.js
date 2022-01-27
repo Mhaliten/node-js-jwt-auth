@@ -33,6 +33,9 @@ module.exports = function(app) {
     connection.end()    
   
   })
+
+
+  
   // sajatbackend | Végpontok
 
 
@@ -60,4 +63,30 @@ module.exports = function(app) {
     connection.end()    
   
   })
+
+
+// Adatfelvitel
+
+app.post('/adatfelvitel', (req, res) => {
+  var mysql = require('mysql')
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'szabo_mate_zarodoga'
+  })
+  
+  connection.connect()
+  
+  connection.query('INSERT INTO VALUES ()'+req.body.bevitel1, function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
+
+    res.send(rows)
+  })
+  
+  connection.end()    
+
+})
 };
