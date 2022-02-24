@@ -11,7 +11,7 @@ module.exports = function(app) {
   });
 
 
-  app.get('/tipus', (req, res) => {
+  app.get('/tipusok', (req, res) => {
     var mysql = require('mysql')
     var connection = mysql.createConnection({
       host: 'localhost',
@@ -89,4 +89,36 @@ app.post('/adatfelvitel', (req, res) => {
   connection.end()    
 
 })
+
+
+app.post('/tipus_lekerdez', (req, res) => {
+  var mysql = require('mysql')
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'szabo_mate_zarodoga'
+  })
+  
+  connection.connect()
+  
+  connection.query('SELECT * from termekek where termektipus_id = '+req.body.bevitel1, function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
+
+    res.send(rows)
+  })
+  
+  connection.end()    
+
+})
+
+
+
+
+
+
+
+
 };
