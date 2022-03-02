@@ -119,7 +119,7 @@ module.exports = function(app) {
 
 // Adatfelvitel (MÉG NEM MŰKÖDIK!)
 
-app.post('/adatfelvitel', (req, res) => {
+app.post('/tipusfelvitel', (req, res) => {
   var mysql = require('mysql')
   var connection = mysql.createConnection({
     host: 'localhost',
