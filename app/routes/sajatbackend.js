@@ -10,8 +10,9 @@ module.exports = function(app) {
     next();
   });
 
-
-  app.get('/tipusok', (req, res) => {
+//Adatbázis kapcsolat létrehozása
+  //ennek a meghívásával kaphatod meg a connectiont
+  function getDatabaseConnection() {
     var mysql = require('mysql')
     var connection = mysql.createConnection({
       host: 'localhost',
@@ -19,18 +20,21 @@ module.exports = function(app) {
       password: '',
       database: 'szabo_mate_zarodoga'
     })
-    
     connection.connect()
-    
-    connection.query('SELECT * from tipus', function (err, rows, fields) {
-      if (err) throw err
-    
-      console.log(rows)
-  
+
+    return connection;
+  }
+
+
+  app.get('/tipusok', (req, res) => {
+    getDatabaseConnection().query('SELECT * from tipus', function (err, rows, fields) {
+      // if (err) res.send('Hiba történt a tipusok lekérdezésében')
+      if (err) res.send(err)
+
       res.send(rows)
     })
-    
-    connection.end()    
+
+    getDatabaseConnection().end()
   
   })
 
@@ -42,25 +46,16 @@ module.exports = function(app) {
   // Törlés teszt
 
   app.post('/torles', (req, res) => {
-    var mysql = require('mysql')
-    var connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'szabo_mate_zarodoga'
-    })
-    
-    connection.connect()
-    
-    connection.query('DELETE FROM tipus WHERE tipus_id ='+req.body.bevitel1, function (err, rows, fields) {
+
+    getDatabaseConnection().query('DELETE FROM tipus WHERE tipus_id ='+req.body.bevitel1, function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
   
       res.send(rows)
     })
-    
-    connection.end()    
+
+    getDatabaseConnection().end()
   
   })
 
@@ -70,49 +65,29 @@ module.exports = function(app) {
   // Ez alatt van a termék törlés
 
   app.post('/termektorles', (req, res) => {
-    var mysql = require('mysql')
-    var connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'szabo_mate_zarodoga'
-    })
-    
-    connection.connect()
-    
-    connection.query('DELETE FROM termekek WHERE termek_id ='+req.body.bevitel1, function (err, rows, fields) {
+    getDatabaseConnection().query('DELETE FROM termekek WHERE termek_id ='+req.body.bevitel1, function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
   
       res.send(rows)
     })
-    
-    connection.end()    
+
+    getDatabaseConnection().end()
   
   })
 
 
   app.get('/termekek_lekerdezes', (req, res) => {
-    var mysql = require('mysql')
-    var connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'szabo_mate_zarodoga'
-    })
-    
-    connection.connect()
-    
-    connection.query('SELECT * from termekek', function (err, rows, fields) {
+    getDatabaseConnection().query('SELECT * from termekek', function (err, rows, fields) {
       if (err) throw err
     
       console.log(rows)
   
       res.send(rows)
     })
-    
-    connection.end()    
+
+    getDatabaseConnection().end()
   
   })
 
@@ -120,41 +95,21 @@ module.exports = function(app) {
 // Adatfelvitel (MÉG NEM MŰKÖDIK!)
 
 app.post('/tipusfelvitel', (req, res) => {
-  var mysql = require('mysql')
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'szabo_mate_zarodoga'
-  })
-  
-  connection.connect()
-  
-  connection.query('INSERT INTO VALUES ()'+req.body.bevitel1, function (err, rows, fields) {
-    if (err) throw err
-  
+  getDatabaseConnection().query('INSERT INTO tipus (tipus_nev) VALUES ("' + req.body.bevitel1 + '")', function (err, rows, fields) {
+    if (err) res.send('Hiba történt a tipus felvitelekor!')
+
     console.log(rows)
 
     res.send(rows)
   })
-  
-  connection.end()    
+
+  getDatabaseConnection().end()
 
 })
 
 
 app.post('/tipus_lekerdez', (req, res) => {
-  var mysql = require('mysql')
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'szabo_mate_zarodoga'
-  })
-  
-  connection.connect()
-  
-  connection.query('SELECT * from termekek where termektipus_id = '+req.body.bevitel1, function (err, rows, fields) {
+  getDatabaseConnection().query('SELECT * from termekek where termektipus_id = '+req.body.bevitel1, function (err, rows, fields) {
     if (err) throw err
   
     console.log(rows)
@@ -162,7 +117,7 @@ app.post('/tipus_lekerdez', (req, res) => {
     res.send(rows)
   })
   
-  connection.end()    
+  getDatabaseConnection().end()   
 
 })
 
