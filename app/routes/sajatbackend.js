@@ -92,10 +92,10 @@ module.exports = function(app) {
   })
 
 
-// Adatfelvitel (MÉG NEM MŰKÖDIK!)
+// Adatfelvitel (MÉG NINCS FRONTEND HOZZÁ!)
 
 app.post('/tipusfelvitel', (req, res) => {
-  getDatabaseConnection().query('INSERT INTO tipus (tipus_nev) VALUES ("' + req.body.bevitel1 + '")', function (err, rows, fields) {
+  getDatabaseConnection().query('INSERT INTO tipus VALUES (NULL, "' + req.body.bevitel1 + '")', function (err, rows, fields) {
     if (err) res.send('Hiba történt a tipus felvitelekor!')
 
     console.log(rows)
