@@ -92,7 +92,7 @@ module.exports = function(app) {
   })
 
 
-// Adatfelvitel (MÉG NINCS FRONTEND HOZZÁ!)
+
 
 app.post('/tipusfelvitel', (req, res) => {
   getDatabaseConnection().query('INSERT INTO tipus VALUES (NULL, "' + req.body.bevitel1 + '")', function (err, rows, fields) {
@@ -106,6 +106,35 @@ app.post('/tipusfelvitel', (req, res) => {
   getDatabaseConnection().end()
 
 })
+
+app.post('/eteltipus_felvitel', (req, res) => {
+  getDatabaseConnection().query('INSERT INTO etel_tipusok VALUES (NULL, "' + req.body.bevitel1 + '")', function (err, rows, fields) {
+    if (err) res.send('Hiba történt a tipus felvitelekor!')
+
+    console.log(rows)
+
+    res.send(rows)
+  })
+
+  getDatabaseConnection().end()
+
+})
+
+// Termék felvitel (NINCS KÉSZ!)
+
+app.post('/termek_felvitel', (req, res) => {
+  getDatabaseConnection().query('INSERT INTO termekek VALUES (NULL, "' + req.body.bevitel1 + req.body.bevitel2 + req.body.bevitel3 + req.body.bevitel4 + req.body.bevitel5 +'")', function (err, rows, fields) {
+    if (err) res.send('Hiba történt a tipus felvitelekor!')
+
+    console.log(rows)
+
+    res.send(rows)
+  })
+
+  getDatabaseConnection().end()
+
+})
+
 
 
 app.post('/tipus_lekerdez', (req, res) => {
