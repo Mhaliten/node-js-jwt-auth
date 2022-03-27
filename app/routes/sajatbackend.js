@@ -60,6 +60,34 @@ module.exports = function(app) {
   })
 
 
+  app.get('/etkez', (req, res) => {
+    getDatabaseConnection().query('SELECT * from etel_tipusok ='+req.body.bevitel1, function (err, rows, fields) {
+      if (err) throw err
+    
+      console.log(rows)
+  
+      res.send(rows)
+    })
+
+    getDatabaseConnection().end()
+  
+  })
+
+
+
+  app.post('/recept_lekerdez', (req, res) => {
+  getDatabaseConnection().query('SELECT * from receptek where recept_tipus_id ='+req.body.bevitel1, function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
+
+    res.send(rows)
+  })
+
+  getDatabaseConnection().end()
+
+})
+
 
 
   // Ez alatt van a termék törlés
@@ -149,12 +177,4 @@ app.post('/tipus_lekerdez', (req, res) => {
   getDatabaseConnection().end()   
 
 })
-
-
-
-
-
-
-
-
 };
