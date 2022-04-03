@@ -148,7 +148,7 @@ app.post('/eteltipus_felvitel', (req, res) => {
 
 })
 
-// Termék felvitel (NINCS KÉSZ!)
+// Termék felvitel 
 
 app.post('/termek_felvitel', (req, res) => {
     getDatabaseConnection().query("INSERT INTO termekek VALUES (NULL, "+req.body.bevitel1+", '"+req.body.bevitel2+"', "+req.body.bevitel3+", '"+req.body.bevitel4+"') ", function (err, rows, fields) {
@@ -164,6 +164,21 @@ app.post('/termek_felvitel', (req, res) => {
 })
 
 
+app.post('/recept_felvitel', (req, res) => {
+  getDatabaseConnection().query("INSERT INTO receptek VALUES (NULL, "+req.body.bevitel1+", '"+req.body.bevitel2+"', '"+req.body.bevitel3+"', '"+req.body.bevitel4+"','"+req.body.bevitel5+"') ", function (err, rows, fields) {
+  if (err) res.send('Hiba történt a tipus felvitelekor!')
+
+  console.log(rows)
+
+  res.send(rows)
+})
+
+getDatabaseConnection().end()
+
+})
+
+
+
 
 app.post('/tipus_lekerdez', (req, res) => {
   getDatabaseConnection().query('SELECT * from termekek where termektipus_id = '+req.body.bevitel1, function (err, rows, fields) {
@@ -177,4 +192,30 @@ app.post('/tipus_lekerdez', (req, res) => {
   getDatabaseConnection().end()   
 
 })
+
+app.post('/eteltipus_lekerdez', (req, res) => {
+  getDatabaseConnection().query('SELECT * from etel_tipusok where etel_id = '+req.body.bevitel1, function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
+
+    res.send(rows)
+  })
+  
+  getDatabaseConnection().end()   
+
+})
+
+app.get('/tipusok', (req, res) => {
+  getDatabaseConnection().query('SELECT * from tipus', function (err, rows, fields) {
+    // if (err) res.send('Hiba történt a tipusok lekérdezésében')
+    if (err) res.send(err)
+
+    res.send(rows)
+  })
+
+  getDatabaseConnection().end()
+
+})
+
 };
