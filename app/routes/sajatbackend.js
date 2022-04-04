@@ -75,7 +75,7 @@ module.exports = function(app) {
 
 
 
-  app.post('/recept_lekerdez', (req, res) => {
+  app.get('/recept_lekerdez_torles', (req, res) => {
     getDatabaseConnection().query('SELECT * from receptek', function (err, rows, fields) {
     if (err) throw err
   
@@ -85,6 +85,19 @@ module.exports = function(app) {
   })
 
   getDatabaseConnection().end()
+
+})
+
+app.post('/recept_lekerdez_receptek', (req, res) => {
+  getDatabaseConnection().query('SELECT * from receptek', function (err, rows, fields) {
+  if (err) throw err
+
+  console.log(rows)
+
+  res.send(rows)
+})
+
+getDatabaseConnection().end()
 
 })
 
