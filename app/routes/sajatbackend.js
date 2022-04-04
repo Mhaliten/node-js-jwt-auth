@@ -76,7 +76,7 @@ module.exports = function(app) {
 
 
   app.post('/recept_lekerdez', (req, res) => {
-  getDatabaseConnection().query('SELECT * from receptek where recept_tipus_id ='+req.body.bevitel1, function (err, rows, fields) {
+    getDatabaseConnection().query('SELECT * from receptek', function (err, rows, fields) {
     if (err) throw err
   
     console.log(rows)
@@ -210,6 +210,24 @@ app.get('/tipusok', (req, res) => {
   getDatabaseConnection().query('SELECT * from tipus', function (err, rows, fields) {
     // if (err) res.send('Hiba történt a tipusok lekérdezésében')
     if (err) res.send(err)
+
+    res.send(rows)
+  })
+
+  getDatabaseConnection().end()
+
+})
+
+
+
+// Recept törlés
+
+
+app.post('/recept_torles', (req, res) => {
+  getDatabaseConnection().query('DELETE FROM receptek WHERE recept_id ='+req.body.bevitel1, function (err, rows, fields) {
+    if (err) throw err
+  
+    console.log(rows)
 
     res.send(rows)
   })
