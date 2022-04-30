@@ -164,7 +164,7 @@ app.post('/eteltipus_felvitel', (req, res) => {
 // Termék felvitel 
 
 app.post('/termek_felvitel', (req, res) => {
-    getDatabaseConnection().query("INSERT INTO termekek VALUES (NULL, "+req.body.bevitel1+", '"+req.body.bevitel2+"', "+req.body.bevitel3+", '"+req.body.bevitel4+"') ", function (err, rows, fields) {
+    getDatabaseConnection().query("INSERT INTO termekek VALUES (NULL, "+req.body.bevitel1+", '"+req.body.bevitel2+"', "+req.body.bevitel3+", '"+req.body.bevitel4+"','"+req.body.bevitel5+"') ", function (err, rows, fields) {
     if (err) res.send('Hiba történt a tipus felvitelekor!')
 
     console.log(rows)
